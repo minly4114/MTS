@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - MTS</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">MTS</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+					<ul class="navbar-nav flex-grow-1">
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Client" asp-action="Index">Клиенты</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Call" asp-action="Index">Звонки</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Cost" asp-action="Index">Тарифы</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-dark" asp-area="" asp-controller="Payment" asp-action="Index">Платежи</a>
+						</li>
+					</ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - MTS - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script>
+		$('table.table_data').each(function () {
+			var currentPage = 0;
+			var numPerPage = 10;
+			var $table = $(this);
+			$table.bind('repaginate', function () {
+				$table.find('tbody tr').hide().slice(currentPage * numPerPage, (currentPage + 1) * numPerPage).show();
+			});
+			$table.trigger('repaginate');
+			var numRows = $table.find('tbody tr').length;
+			var numPages = Math.ceil(numRows / numPerPage);
+			var $pager = $('<div class="pager"></div>');
+			for (var page = 0; page < numPages; page++) {
+				$('<span class="page-number"></span>').text(page + 1).bind('click', {
+					newPage: page
+				}, function (event) {
+					currentPage = event.data['newPage'];
+					$table.trigger('repaginate');
+					$(this).addClass('active').siblings().removeClass('active');
+				}).appendTo($pager).addClass('clickable');
+			}
+
+			$pager.insertAfter($table).find('span.page-number:first').addClass('active');
+
+
+		});
+    </script>
+	<style>
+		div.pager {
+			text - align: center;
+			margin: 1em 0;
+		}
+
+		div.pager span {
+			display: inline - block;
+			width: 1.8em;
+			height: 1.8em;
+			line - height: 1.8;
+			text - align: center;
+			cursor: pointer;
+			background: #216aaf;
+			color: #fff;
+			margin - right: 0.5em;
+		}
+
+		div.pager span.active {
+			background: #e6f1fb;
+			color:#216aaf;
+		}
+	</style>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

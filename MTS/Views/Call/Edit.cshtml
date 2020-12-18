@@ -1,0 +1,52 @@
+﻿@model MTS.Data.Entities.Call
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Call</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+		<form asp-action="Edit">
+			<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+			<input type="hidden" asp-for="Id" />
+			<div class="form-group">
+				<label asp-for="Client.Id" class="control-label">Клиент</label>
+				<select asp-for="Client.Id" class="form-control" asp-items="ViewBag.Clients"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="Cost.Id" class="control-label">Населённый пункт</label>
+				<select asp-for="Cost.Id" class="form-control" asp-items="ViewBag.Costs"></select>
+			</div>
+			<div class="form-group">
+				<label asp-for="DateStart" class="control-label">Начало звонка</label>
+				<input type="datetime-local" asp-for="DateStart" class="form-control" />
+				<span asp-validation-for="DateStart" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="DateEnd" class="control-label">Конец звонка</label>
+				<input type="datetime-local" asp-for="DateEnd" class="form-control" />
+				<span asp-validation-for="DateEnd" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<label asp-for="Payment.Date" class="control-label">Время платежа</label>
+				<input type="datetime-local" asp-for="Payment.Date" class="form-control" />
+				<span asp-validation-for="Payment.Date" class="text-danger"></span>
+			</div>
+			<div class="form-group">
+				<input type="submit" value="Save" class="btn btn-primary" />
+			</div>
+		</form>
+    </div>
+</div>
+
+<div>
+	<a asp-action="Index">Вернутся к списку</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

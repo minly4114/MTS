@@ -1,0 +1,40 @@
+﻿@model IEnumerable<MTS.Data.Entities.Payment>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Платежи</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Клиент
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            @*<th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+			<td>
+				@{var quote = item.Call.Client.LastName + " " + item.Call.Client.FirstName + " " + item.Call.Client.PastName;}
+				@quote
+			</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            @*<td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>*@
+        </tr>
+}
+    </tbody>
+</table>
